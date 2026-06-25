@@ -1,0 +1,43 @@
+Algorithme : charger-graphe-depuis-fichier(nom_fichier)
+Début
+    liste_adj : Dictionnaire vide
+    sommets : Ensemble vide
+    
+    Ouvrir nom_fichier en mode Lecture avec le descripteur f
+        Pour chaque ligne de f Faire
+            u, v = extraire_les_deux_sommets(ligne)
+            Ajouter u et v à l'ensemble sommets
+            
+            // Ajouter la liaison non-orientée
+            Ajouter v à liste_adj[u]
+            Ajouter u à liste_adj[v]
+        Fin Pour
+    Fin Ouvrir
+    
+    Trier l'ensemble sommets en une Liste
+    Retourner liste_adj, sommets
+Fin
+
+-------------------------------------------------------------
+
+Algorithme : sauvegarder-matrice-fichier(nom_fichier, sommets, matrice)
+Début
+    Ouvrir nom_fichier en mode Écriture avec le descripteur f
+        // Écrire l'en-tête (les colonnes)
+        Écrire dans f les noms des sommets séparés par des espaces
+        
+        Pour chaque sommet s de sommets Faire
+            ligne_texte = ""
+            Pour chaque sommet x de sommets Faire
+                val = matrice[s][x]
+                Si val == -1 alors
+                    ligne_texte = ligne_texte + "  ∞"
+                Sinon
+                    ligne_texte = ligne_texte + "  " + val
+                Fin Si
+            Fin Pour
+            // Écrire la ligne du sommet s dans le fichier
+            Écrire dans f : s + " |" + ligne_texte
+        Fin Pour
+    Fin Ouvrir
+Fin

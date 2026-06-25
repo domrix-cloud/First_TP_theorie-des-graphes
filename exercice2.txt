@@ -1,0 +1,46 @@
+parcours-en-profondeur-cycle(G, s, etat)
+Début
+    // Au lieu de Vrai, on dit que l'exploration est "En cours"
+    etat[s] = "EN_COURS"
+    
+    Pour tout voisin v de s Faire
+        
+        // condition 1 : Si le voisin est déjà "En cours", on a tourné en rond !
+        Si etat[v] == "EN_COURS" alors
+            Retourner Vrai
+        Fin si
+        
+        // condition 2 : Si le voisin n'est pas du tout visité, on y va
+        Si etat[v] == "NON" alors
+            Si parcours-en-profondeur-cycle(G, v, etat) == Vrai alors
+                Retourner Vrai  // On fait remonter le signal d'alerte
+            Fin si
+        Fin si
+        
+    Fin pour
+    
+    // On a fini d'explorer tous les voisins de s, on clôture le sommet
+    etat[s] = "TERMINE"
+    Retourner Faux
+Fin
+
+verifier-graphe(G)
+Début
+    // 1. Initialisation : personne n'est visité
+    Pour tout sommet u de G Faire
+        etat[u] = "NON"
+    Fin pour
+    
+    // 2. Lancement du DFS sur chaque zone non explorée
+    Pour tout sommet u de G Faire
+        Si etat[u] == "NON" alors
+            Si parcours-en-profondeur-cycle(G, u, etat) == Vrai alors
+                Afficher "Le graphe contient un cycle !"
+                Retourner Vrai
+            Fin si
+        Fin si
+    Fin pour
+    
+    Afficher "Le graphe ne contient aucun cycle."
+    Retourner Faux
+Fin

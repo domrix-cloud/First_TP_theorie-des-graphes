@@ -1,0 +1,34 @@
+Algorithme : parcours-en-largeur-distances(G, s)
+Début
+    F : File d'attente
+    distance : Tableau ou Dictionnaire     // MODIFICATION : Pour stocker la distance de chaque sommet
+    
+    Pour tout sommet u de G Faire
+        visite[u] = Faux
+        distance[u] = -1                    // MODIFICATION : -1 signifie que le sommet n'est pas encore atteint
+    Fin pour
+    
+    visite[s] = Vrai
+    distance[s] = 0                         // MODIFICATION : La distance de la source à elle-même est toujours 0
+    F.enfiler(s)
+    
+    Tant que F ̸= Vide, faire :
+        u = F.defiler()
+        Pour tout voisin v de u Faire
+            Si visite(v) = Faux alors
+                visite(v) = Vrai
+                distance[v] = distance[u] + 1  // MODIFICATION : Le voisin v est à une distance k + 1 du sommet u
+                F.enfiler(v)
+            Fin si
+        Fin pour
+    Fin tant que
+    
+    # Affichage des résultats mis à jour
+    Pour tout sommet u de G Faire
+        Si visite(u) = Vrai alors
+            Afficher "Sommet ", u, " -> Distance depuis la source : ", distance[u]
+        Sinon
+            Afficher "Sommet ", u, " -> Inaccessible depuis la source"
+        Fin si
+    Fin pour
+Fin
